@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#9d1c24">
+<title>百家姓 · 南洋姓氏寻根</title>
+<style>
+:root {
+  --red: #9d1c24;
+  --red-hover: #b8232c;
+  --ink: #2c1f1d;
+  --muted: #6e5e5a;
+  --cream: #fbf7f0;
+  --paper: #ffffff;
+  --line: #e8ded2;
+  --gold: #b58a45;
+  --badge-bg: #f5ebe0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans SC", "PingFang SC", "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+body:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .18;
+  background-image: radial-gradient(#9d1c24 0.5px, transparent .5px);
+  background-size: 8px 8px;
+}
+.app {
+  max-width: 760px;
+  margin: auto;
+  padding: 18px 16px 50px;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: .08em;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+.brand small {
+  display: block;
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: .2em;
+  margin-top: 2px;
+}
+.langs {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  background: #fff9;
+}
+.langs button {
+  border: 0;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.langs button.active {
+  background: var(--red);
+  color: #fff;
+}
+.hero {
+  text-align: center;
+  padding: 10px 0 20px;
+}
+.seal {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--red);
+  align-items: center;
+  justify-content: center;
+  color: var(--red);
+  font-family: "Songti SC", "SimSun", serif;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: "Songti SC", "SimSun", serif;
+  font-size: 32px;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.hero p {
+  color: var(--muted);
+  margin: 0;
+  font-size: 14px;
+}
+
+/* 知识折叠卡片 */
+.info-accordion {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  margin: 14px 0 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(92, 48, 32, 0.03);
+}
+.info-header {
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: #fffdfa;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--red);
+}
+.info-content {
+  padding: 0 18px 14px;
+  font-size: 13px;
+  color: #554440;
+  line-height: 1.7;
+  border-top: 1px dashed var(--line);
+  display: block;
+}
+
+/* 搜索框 */
+.search {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 6px;
+  display: flex;
+  box-shadow: 0 10px 30px rgba(92, 48, 32, 0.05);
+}
+.search input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: var(--ink);
+}
+.search button {
+  border: 0;
+  background: var(--red);
+  color: white;
+  border-radius: 13px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.search button:hover {
+  background: var(--red-hover);
+}
+
+/* 快捷标签 */
+.tags-wrapper {
+  margin: 14px 0 10px;
+}
+.tags-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  padding-left: 2px;
+}
+.tags {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.tags::-webkit-scrollbar { display: none; }
+.tag {
+  white-space: nowrap;
+  border: 1px solid var(--line);
+  background: #fffaf3;
+  color: var(--red);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tag:hover {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+
+/* 卡片区域 */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 22px;
+  margin-top: 14px;
+  box-shadow: 0 10px 30px rgba(92, 48, 32, 0.05);
+  animation: fadeIn 0.25s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.surname-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 18px;
+}
+.han-box {
+  width: 76px;
+  height: 76px;
+  background: var(--red);
+  color: #fff;
+  font-family: "Songti SC", "SimSun", serif;
+  font-size: 42px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+.name-meta h2 {
+  margin: 0;
+  font-family: "Songti SC", "SimSun", serif;
+  font-size: 24px;
+  color: var(--ink);
+}
+.name-meta .pinyin {
+  margin: 2px 0 6px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+.rank-badge {
+  display: inline-block;
+  background: var(--badge-bg);
+  color: #8c5825;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid #ebd9c3;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 22px 0 12px;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+}
+.section-title:before {
+  content: "";
+  width: 4px;
+  height: 16px;
+  background: var(--red);
+  border-radius: 3px;
+}
+
+/* 方言网格 */
+.dialects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.dialect {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 14px;
+  background: #fffbf5;
+}
+.dialect b {
+  display: block;
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.dialect span {
+  display: block;
+  color: var(--red);
+  font-weight: 750;
+  font-size: 15px;
+  margin-top: 3px;
+}
+
+.story {
+  line-height: 1.85;
+  color: #4a3b37;
+  font-size: 14px;
+  background: #faf6ef;
+  padding: 16px;
+  border-radius: 12px;
+  border-left: 3.5px solid var(--red);
+}
+.fun-fact {
+  margin-top: 12px;
+  background: #fdf5e6;
+  border: 1px dashed #d6a864;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #6d4b1a;
+  line-height: 1.6;
+}
+.note {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+.empty {
+  text-align: center;
+  padding: 40px 15px;
+  color: var(--muted);
+}
+footer {
+  text-align: center;
+  color: #9b8880;
+  font-size: 11.5px;
+  margin-top: 30px;
+  line-height: 1.5;
+}
+@media(max-width: 430px) {
+  .app { padding: 12px 12px 40px; }
+  .dialects { grid-template-columns: 1fr; }
+  .han-box { width: 64px; height: 64px; font-size: 36px; }
+  .hero h1 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <div class="brand">
+      南洋姓氏志
+      <small>MALAYSIA CHINESE SURNAMES</small>
+    </div>
+    <div class="langs">
+      <button data-lang="zh" class="active">中文</button>
+      <button data-lang="ms">BM</button>
+      <button data-lang="en">EN</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="seal">姓</div>
+    <h1 id="ui-title">姓氏寻根</h1>
+    <p id="ui-sub">从一个姓氏，认识南洋华人的迁徙足迹与方言特色。</p>
+  </section>
+
+  <!-- 为什么拼法如此独特科普卡片 -->
+  <div class="info-accordion">
+    <div class="info-header" onclick="toggleInfo()">
+      <span id="ui-info-title">💡 为什么马来西亚华人的姓名拼法如此特别？</span>
+      <span id="info-icon">▾</span>
+    </div>
+    <div class="info-content" id="info-body">
+      <div id="ui-info-text">
+        现行的“汉语拼音”是在中华人民共和国成立后才推广的。在此之前，早已定居大马的华人先辈大多不会普通话，主要讲各自的家乡方言（如粤语、福建话、客家话等），当时也缺乏统一学习标准拼音的环境。<br><br>
+        因此，初代华人报户口时，登记官主要是根据他们口头的方言发音，结合官员自身的拼读习惯进行记录。这就形成了我们今天所见到的各种充满方言特色的拼写法！
+      </div>
+    </div>
+  </div>
+
+  <div class="search">
+    <input id="q" placeholder="输入汉字或英文拼音，如：陈 / Tan / 卓 / Toh" />
+    <button id="go">查询</button>
+  </div>
+
+  <div class="tags-wrapper">
+    <div class="tags-label" id="ui-tags-label">热门推荐姓氏：</div>
+    <div class="tags" id="tags"></div>
+  </div>
+
+  <section id="result"></section>
+
+  <footer id="ui-footer">
+    资料为文化教育用途；人口数据参考马来西亚官方人口普查与各方言社群传统拼读。
+  </footer>
+
+</div>
+
+<script>
+// 完整姓氏数据库（包含重点20姓 + 百大常见扩充姓氏）
+const DB = [
+  {
+    c: "陈", t: "陳", py: "Chén", rank: "No. 1 (2,511,818人)",
+    keys: ["陈","陳","tan","chan","chin","ting","ding","tang","thang","chen"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Tan" },
+      { name: "潮州 Teochew", val: "Tan" },
+      { name: "海南 Hainan", val: "Tan" },
+      { name: "广府/粤语 Cantonese", val: "Chan" },
+      { name: "客家 Hakka", val: "Chin" },
+      { name: "福州 Foochow", val: "Ting / Ding" },
+      { name: "广西 Guangxi", val: "Tang / Thang" }
+    ],
+    story: {
+      zh: "3000多年前，周天子把一位叫“满”的圣人后代封在一个叫“陈国”的地方。陈国灭亡后，这里的子民为了纪念自己的国家，就把国名“陈”拿来当自己的姓氏。陈姓，最初就是“陈国人”的意思。",
+      ms: "Lebih 3,000 tahun lalu pada Zaman Dinasti Zhou di China, Raja telah mengurniakan kawasan bernama “Chen” kepada seorang bijak pandai bernama Man. Apabila Chen runtuh, rakyatnya menggunakan “Chen” sebagai nama keluarga untuk memperingati tanah air mereka. Pada asalnya, nama keluarga Chen bermaksud “rakyat dari Chen”.",
+      en: "Over 3,000 years ago during China’s Zhou Dynasty, a King granted a region called “Chen” to a wise leader named Man. When Chen later fell, its people adopted “Chen” as their surname to remember their homeland. Originally, the surname Chen simply meant “a person from Chen.”"
+    }
+  },
+  {
+    c: "林", t: "林", py: "Lín", rank: "No. 2 (1,880,277人)",
+    keys: ["林","lim","lam","ling","lin"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Lim" },
+      { name: "潮州 Teochew", val: "Lim" },
+      { name: "客家 Hakka", val: "Lim" },
+      { name: "福州 Foochow", val: "Lim / Ling" },
+      { name: "广府/粤语 Cantonese", val: "Lam" }
+    ],
+    story: {
+      zh: "3000年前，一位忠臣比干被商纣王害死，他的妻子逃进森林里生下了遗腹子“坚”。后来周武王为了纪念这位忠臣，也因为孩子出生在森林里，就赐他姓“林”。林姓，最初就是“在森林里出生的孩子”。",
+      ms: "Kira-kira 3,000 tahun yang lalu, seorang pegawai yang setia telah dibunuh oleh seorang raja yang zalim. Isterinya yang sedang hamil telah melarikan diri ke dalam hutan dan melahirkan seorang bayi lelaki bernama Jian. Kemudian, Raja baharu mahu menghargai kesetiaan bapa tersebut. Kerana bayi itu dilahirkan di dalam hutan, Raja memberi beliau nama keluarga “Lim” (yang bermaksud “hutan” dalam bahasa Cina). Pada asalnya, nama keluarga Lim bermaksud “bayi yang dilahirkan di dalam hutan.”",
+      en: "About 3,000 years ago, a loyal official was unfairly killed by a cruel king. His pregnant wife fled into a forest, where she gave birth to a baby boy named Jian. Later, the new King wanted to honor the loyal father. Since the baby was born in the forest, the King gave him the surname “Lim” (which means “forest” in Chinese). Originally, the surname Lim meant “a baby born in the forest.”"
+    }
+  },
+  {
+    c: "黄", t: "黃", py: "Huáng", rank: "No. 3 (1,364,176人)",
+    keys: ["黄","黃","wong","ooi","ng","wee","eng","huang"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Ooi / Ng / Wee" },
+      { name: "潮州 Teochew", val: "Eng / Ng" },
+      { name: "广府/粤语 Cantonese", val: "Wong" },
+      { name: "客家 Hakka", val: "Wong" },
+      { name: "福州 Foochow", val: "Wong" }
+    ],
+    story: {
+      zh: "3000多年前，上古治水有功的英雄——伯益得到了天子的赐封；他的后代带着这块封地建立了“黄国”。后来黄国被邻近的楚国灭亡，黄国的人民为了不忘记自己的国家，便纷纷以国名“黄”作为自己的姓氏。黄姓，最初就是“黄国人”的意思。",
+      ms: "Lebih 3,000 tahun lalu, seorang wira legenda bernama Boyi telah dikurniakan kawasan oleh Raja kerana kehebatannya mengawal banjir zaman purba. Keturunannya kemudian mendirikan “Negara Huang” di tanah tersebut. Apabila Negara Huang ditakluki oleh negara jiran, rakyatnya menggunakan “Huang” sebagai nama keluarga untuk memperingati tanah air mereka. Pada asalnya, nama keluarga Huang bermaksud “rakyat dari Negara Huang.”",
+      en: "Over 3,000 years ago, a legendary hero named Boyi was rewarded by the King with a region for his great work in controlling ancient floods. His descendants later built the “State of Huang” on this land. When Huang was later conquered by a neighboring state, its people adopted “Huang” as their surname to honor their lost homeland. Originally, the surname Huang simply meant “a person from the State of Huang.”"
+    }
+  },
+  {
+    c: "张", t: "張", py: "Zhāng", rank: "No. 4 (1,194,611人)",
+    keys: ["张","張","teo","teoh","tiew","teow","cheung","cheong","chong","tiong","diong","zhang"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Teo / Teoh / Tiew / Teow" },
+      { name: "潮州 Teochew", val: "Teo / Teoh" },
+      { name: "广府/粤语 Cantonese", val: "Cheung / Cheong" },
+      { name: "客家 Hakka", val: "Chong" },
+      { name: "福州 Foochow", val: "Tiong / Diong" }
+    ],
+    story: {
+      zh: "大约4000多年前的上古时期，黄帝的孙子“挥”受夜空中的星座启发，发明了弓箭。他被任命为专门制造弓箭的官职。因为这项伟大的发明，皇帝赐予他姓“张”（“张”代表着“拉开弓箭”）。张姓，最初就是以前家里制造弓箭或掌管射箭的人。",
+      ms: "Kira-kira 4,000 tahun yang lalu, Hui, iaitu cucu kepada Maharaja Kuning yang legenda, mendapat inspirasi daripada bintang di langit malam lalu mencipta busur dan anak panah. Beliau kemudian dilantik sebagai ketua pembuat busur. Untuk menghargai ciptaan hebat ini, Maharaja mengurniakan beliau nama keluarga “Zhang” (dalam bahasa Cina, “Zhang” bermaksud “menarik busur panah”). Pada asalnya, nama keluarga Zhang bermaksud “orang yang membuat busur atau menguruskan seni memanah.”",
+      en: "About 4,000 years ago, Hui, a grandson of the legendary Yellow Emperor, was inspired by the night stars to invent the bow and arrow. He was then appointed as the chief bowmaker. To honor this great invention, the Emperor gave him the surname “Zhang” (in Chinese, “Zhang” means “drawing a bow”). Originally, the surname Zhang meant “a person who makes bows or manages archery.”"
+    }
+  },
+  {
+    c: "李", t: "李", py: "Lǐ", rank: "No. 5 (1,160,059人)",
+    keys: ["李","lee","li","lei","lay"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Lee / Li" },
+      { name: "潮州 Teochew", val: "Lee / Li" },
+      { name: "客家 Hakka", val: "Lee / Li" },
+      { name: "海南 Hainanese", val: "Lee / Li" },
+      { name: "福州 Foochow", val: "Lee / Li" },
+      { name: "广府/粤语 Cantonese", val: "Lei / Lay" }
+    ],
+    story: {
+      zh: "大约4000年前，李姓的祖先原本担任古代的大法官（官职叫“理”），后代便以官职为姓。后来有一位子孙在逃难途中濒临饿死，幸好靠着路边李子树上的果实救了一命。为了表达感激，也为了隐瞒身份，加上理、李同音通用的缘故，他便将姓氏由“理”改成了水果的“李”，这便是李姓的由来。李姓，最初就是靠吃李子活命的“大法官”后代。",
+      ms: "Kira-kira 4,000 tahun lalu, nenek moyang keluarga Li merupakan seorang ketua hakim (jawatan dipanggil “Li”). Keturunannya menjadikan gelaran ini sebagai nama keluarga. Kemudian, seorang keturunannya yang melarikan diri hampir mati kelaparan, tetapi terselamat kerana memakan buah plum. Untuk menunjukkan rasa terhutang budi dan menyembunyikan identitinya, dan disebabkan perkataan “plum” serta “hakim” mempunyai sebutan yang sama dalam bahasa Cina, beliau menukar nama keluarga kepada “Li” (yang bermaksud “buah plum”). Pada asalnya, nama keluarga Li bermaksud “keturunan ketua hakim yang terselamat kerana buah plum.”",
+      en: "About 4,000 years ago, the ancestor of the Li family served as a chief judge (a position named “Li” in ancient Chinese). His descendants took this title as their surname. Later, one descendant was fleeing for his life and nearly starved to death. He survived by eating wild plums from a tree on the roadside. To show gratitude to the plum tree, hide his identity, and because “plum” and “judge” shared the same pronunciation in Chinese, he changed his surname to “Li” (which means “plum”). Originally, the surname Li meant “descendants of a chief judge who were saved by plums.”"
+    }
+  },
+  {
+    c: "王", t: "王", py: "Wáng", rank: "No. 6 (935,416人)",
+    keys: ["王","ong","wong","heng","hing","wang"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Ong" },
+      { name: "潮州 Teochew", val: "Heng / Hing" },
+      { name: "广府/粤语 Cantonese", val: "Wong" },
+      { name: "客家 Hakka", val: "Wong" },
+      { name: "福州 Foochow", val: "Wong" }
+    ],
+    story: {
+      zh: "大约2500多年前，周朝的太子因直言劝谏被降为平民。因为他的祖先是周天子，人们便一直尊称他的家族为“王家”。后代子孙为了彰显高贵的皇室血统，便以“王”为姓。王姓，最初就是“国王与皇帝的子孙”的意思。",
+      ms: "Kira-kira 2,500 tahun yang lalu, seorang putera raja dari Dinasti Zhou telah diturunkan pangkat menjadi rakyat biasa kerana menasihati Raja dengan sejujurnya. Kerana nenek moyangnya adalah Raja, orang ramai terus memanggil keluarganya sebagai “Keluarga Diraja” (Keluarga Wang). Kemudian, keturunannya menggunakan “Wang” (yang bermaksud “Raja” dalam bahasa Cina) sebagai nama keluarga untuk memperingati keturunan diraja mereka yang mulia. Pada asalnya, nama keluarga Wang bermaksud “keturunan Raja dan Maharaja.”",
+      en: "About 2,500 years ago, a prince of the Zhou Dynasty was demoted to a commoner for speaking truthfully to the King. Because his ancestors were royal Kings, people kept respectfully calling his family the “Royal Family” (Wang Family). Later, his descendants adopted “Wang” (which means “King” in Chinese) as their surname to honor their noble royal heritage. Originally, the surname Wang meant “descendants of the King and Emperor.”"
+    }
+  },
+  {
+    c: "吴", t: "吳", py: "Wú", rank: "No. 7 (917,587人)",
+    keys: ["吴","吳","goh","go","ng","ngu","wu"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Goh / Go" },
+      { name: "潮州 Teochew", val: "Goh / Go" },
+      { name: "广府/粤语 Cantonese", val: "Ng" },
+      { name: "客家 Hakka", val: "Ng" },
+      { name: "福州 Foochow", val: "Ngu" }
+    ],
+    story: {
+      zh: "大约3200年前，周朝的两位王子——泰伯与仲雍为了把王位让给弟弟，主动放弃了高贵的皇族身份，远走南方建立了“吴国”。国家灭亡后，这里的子民为了不忘自己的国家与祖先，便以国名“吴”作为自己的姓氏。吴姓，最初就是谦让王位、建立吴国的后代。",
+      ms: "Kira-kira 3,200 tahun lalu pada Zaman Dinasti Zhou di China, dua orang putera raja secara sukarela menyerahkan takhta kepada adik lelaki mereka. Mereka berpindah ke selatan dan mendirikan “Negara Wu”. Apabila negara itu runtuh, rakyatnya menggunakan “Wu” sebagai nama keluarga untuk memperingati tanah air dan nenek moyang mereka. Pada asalnya, nama keluarga Wu bermaksud “keturunan yang menyerahkan takhta dan mendirikan Negara Wu.”",
+      en: "About 3,200 years ago during China’s Zhou Dynasty, two princes voluntarily gave up the royal throne to their younger brother. They moved south and established the “State of Wu.” After the state fell, its people adopted “Wu” as their surname to honor their homeland and ancestors. Originally, the surname Wu meant “descendants of those who yielded the throne and founded the State of Wu.”"
+    }
+  },
+  {
+    c: "刘", t: "劉", py: "Liú", rank: "No. 8 (718,943人)",
+    keys: ["刘","劉","low","lau","liu"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Low / Lau" },
+      { name: "潮州 Teochew", val: "Lau" },
+      { name: "广府/粤语 Cantonese", val: "Lau" },
+      { name: "客家 Hakka", val: "Liew / Lau" },
+      { name: "福州 Foochow", val: "Lau / Lieu" }
+    ],
+    story: {
+      zh: "大约3800年前，刘姓祖先刘累因为掌握了神奇的“养龙”技术，被皇帝封为养龙官（御龙氏）。后来，他的后代刘邦建立了辉煌的汉朝，刘姓也因此成为中国历史上出皇帝最多的帝王姓氏之一。刘姓，最初就是会“养龙”的家族与汉朝皇帝的后代。",
+      ms: "Kira-kira 3,800 tahun lalu, Liu Lei, nenek moyang keluarga Liu, dilantik sebagai pegawai penjaga naga oleh Maharaja kerana menguasai kemahiran legenda membela naga. Berkurun-kurun kemudian, keturunannya, Liu Bang, mendirikan Dinasti Han yang gemilang, menjadikan Liu salah satu nama keluarga yang melahirkan paling banyak maharaja dalam sejarah China. Pada asalnya, nama keluarga Liu bermaksud “keluarga pembela naga dan keturunan maharaja Dinasti Han.”",
+      en: "About 3,800 years ago, Liu Lei, the ancestor of the Liu family, was appointed as the royal dragon trainer by the Emperor for mastering the legendary skill of raising dragons. Centuries later, his descendant Liu Bang founded the glorious Han Dynasty, making Liu one of the surnames with the most emperors in Chinese history. Originally, the surname Liu meant “the family of dragon trainers and descendants of Han Dynasty emperors.”"
+    }
+  },
+  {
+    c: "蔡", t: "蔡", py: "Cài", rank: "No. 9 (660,836人)",
+    keys: ["蔡","chua","chuah","choi","chai","cai"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Chua / Chuah" },
+      { name: "潮州 Teochew", val: "Chua" },
+      { name: "广府/粤语 Cantonese", val: "Choi" },
+      { name: "客家 Hakka", val: "Chai" },
+      { name: "福州 Foochow", val: "Chai" }
+    ],
+    story: {
+      zh: "大约3000前的中国周朝，周武王把自己的弟弟——叔度封在一个叫“蔡国”的地方建立封国。后来蔡国被邻国灭亡，蔡国的皇室子孙与子民为了纪念自己的国家与祖先，便纷纷以原国名“蔡”作为自己的姓氏，这便是蔡姓的由来。蔡姓，最初就是“蔡国人”的意思。",
+      ms: "Kira-kira 3,000 tahun lalu pada Zaman Dinasti Zhou di China, Raja Wu telah mengurniakan kawasan bernama “Negara Cai” kepada adik lelakinya, Shudu. Apabila Negara Cai kemudiannya ditakluki oleh negara jiran, keturunan diraja dan rakyatnya menggunakan “Cai” sebagai nama keluarga untuk memperingati tanah air serta nenek moyang mereka. Pada asalnya, nama keluarga Cai bermaksud “rakyat dari Negara Cai.”",
+      en: "About 3,000 years ago during China’s Zhou Dynasty, King Wu granted a region named the “State of Cai” to his younger brother, Shudu. When Cai was later conquered by a neighboring state, its royal descendants and citizens adopted “Cai” as their surname to remember their lost homeland and ancestors. Originally, the surname Cai simply meant “a person from the State of Cai.”"
+    }
+  },
+  {
+    c: "杨", t: "楊", py: "Yáng", rank: "No. 10 (603,555人)",
+    keys: ["杨","楊","yeo","yeoh","yew","yong","yeong","yeon","yang"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Yeo / Yeoh / Yew" },
+      { name: "潮州 Teochew", val: "Yeo / Yew" },
+      { name: "广府/粤语 Cantonese", val: "Yeung / Yong" },
+      { name: "客家 Hakka", val: "Yong / Yeong / Yeon" }
+    ],
+    story: {
+      zh: "周朝时期，晋国一位忠臣叔向因为立下功劳，被国君赏赐了一块叫做“杨”的领地（今山西）。他的子孙后代便以这块领地的名字作为姓氏，世代相传为“杨”氏，这便是杨姓最主要的由来之一。杨姓，最初就是“杨国人”的意思。",
+      ms: "Semasa Zaman Dinasti Zhou, Shuxiang, seorang pegawai yang setia dari Negara Jin, telah dikurniakan sebuah wilayah bernama “Yang” oleh Raja atas perkhidmatannya yang cemerlang. Keturunannya kemudian menggunakan nama wilayah ini sebagai nama keluarga yang diwarisi turun-temurun. Pada asalnya, nama keluarga Yang bermaksud “rakyat dari wilayah Yang.”",
+      en: "During the Zhou Dynasty, Shuxiang, a loyal official of the State of Jin, was rewarded by the King with a land named “Yang” for his great service. His descendants then took the name of this land as their surname, passing it down through generations. Originally, the surname Yang meant “a person from the territory of Yang.”"
+    }
+  },
+  {
+    c: "许", t: "許", py: "Xǔ", rank: "No. 11 (528,186人)",
+    keys: ["许","許","koh","khaw","khor","hui","hii","diong","xu"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Koh / Khaw / Khor" },
+      { name: "潮州 Teochew", val: "Koh" },
+      { name: "广府/粤语 Cantonese", val: "Hui" },
+      { name: "客家 Hakka", val: "Hii / Hee" },
+      { name: "福州 Foochow", val: "Diong / Hii" }
+    ],
+    story: {
+      zh: "大约3000多年前，周朝建立时，周武王把上古贤人的后代许文叔，封在一个叫“许国”（今河南许昌）的地方。后来许国被灭，许国的皇室子孙与子民为了纪念自己的祖国，便纷纷以原国名“许”作为自己的姓氏。许姓，最初就是“许国人”的意思。",
+      ms: "Lebih 3,000 tahun lalu pada Zaman Dinasti Zhou, Raja Wu telah mengurniakan kawasan bernama “Negara Xu” kepada Xu Wenshu, seorang keturunan orang bijaksana zaman purba. Apabila Negara Xu kemudiannya ditakluki, keturunan diraja dan rakyatnya menggunakan “Xu” sebagai nama keluarga untuk memperingati tanah air mereka. Pada asalnya, nama keluarga Xu bermaksud “rakyat dari Negara Xu.”",
+      en: "Over 3,000 years ago during the Zhou Dynasty, King Wu granted a region named the “State of Xu” to Xu Wenshu, a descendant of an ancient sage. When Xu was later conquered, its royal descendants and citizens adopted “Xu” as their surname to honor their lost homeland. Originally, the surname Xu simply meant “a person from the State of Xu.”"
+    }
+  },
+  {
+    c: "郑", t: "鄭", py: "Zhèng", rank: "No. 12 (427,578人)",
+    keys: ["郑","鄭","tee","tay","cheng","chang","tang","zheng"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Tee / Tay" },
+      { name: "潮州 Teochew", val: "Tay" },
+      { name: "广府/粤语 Cantonese", val: "Cheng" },
+      { name: "客家 Hakka", val: "Chang" },
+      { name: "福州 Foochow", val: "Tang / Cheng" }
+    ],
+    story: {
+      zh: "大约2800前，周宣王把自己的弟弟姬友封在一个叫“郑国”的地方建立封国（位于今陕西，后迁至河南）。后来郑国在战国时期被韩国灭亡，郑国的皇室子孙与子民为了不忘记自己的根源与国家，便纷纷以原国名“郑”作为自己的姓氏。郑姓，最初就是“郑国人”的意思。",
+      ms: "Kira-kira 2,800 tahun lalu, Raja Xuan dari Dinasti Zhou telah mengurniakan kawasan bernama “Negara Zheng” kepada adik lelakinya, Jiyou. Apabila Negara Zheng kemudiannya ditakluki semasa Zaman Negeri-Negeri Berperang, keturunan diraja dan rakyatnya menggunakan “Zheng” sebagai nama keluarga agar tidak melupakan asal usul dan tanah air mereka. Pada asalnya, nama keluarga Zheng bermaksud “rakyat dari Negara Zheng.”",
+      en: "About 2,800 years ago, King Xuan of the Zhou Dynasty granted a region named the “State of Zheng” to his younger brother, Jiyou. When Zheng was later conquered during the Warring States period, its royal descendants and citizens adopted “Zheng” as their surname to keep the memory of their roots and homeland alive. Originally, the surname Zheng simply meant “a person from the State of Zheng."
+    }
+  },
+  {
+    c: "谢", t: "謝", py: "Xiè", rank: "No. 13 (398,814人)",
+    keys: ["谢","謝","cheah","chia","tse","xie"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Cheah / Chia" },
+      { name: "潮州 Teochew", val: "Chia" },
+      { name: "客家 Hakka", val: "Chia" },
+      { name: "广府/粤语 Cantonese", val: "Tse" },
+      { name: "福州 Foochow", val: "Chia / Sia" }
+    ],
+    story: {
+      zh: "大约2800前，周宣王将他的舅舅申伯册封在一个叫“谢国”（位于今河南南阳）的地方。后来谢国被邻国灭亡，谢国的后代与子民为了不忘记自己的祖国，便纷纷以原国名“谢”作为自己的姓氏。谢姓，最初就是“谢国人”的意思。",
+      ms: "Kira-kira 2,800 tahun lalu, Raja Xuan dari Dinasti Zhou telah mengurniakan kawasan bernama “Negara Xie” kepada bapa saudaranya, Shenbo. Apabila Negara Xie kemudiannya ditakluki oleh negara jiran, keturunan dan rakyatnya menggunakan “Xie” sebagai nama keluarga untuk memperingati tanah air mereka. Pada asalnya, nama keluarga Xie bermaksud “rakyat dari Negara Xie.”",
+      en: "About 2,800 years ago, King Xuan of the Zhou Dynasty granted a region named the “State of Xie” to his uncle, Shenbo. When Xie was later conquered by a neighboring state, its descendants and citizens adopted “Xie” as their surname to remember their lost homeland. Originally, the surname Xie simply meant “a person from the State of Xie.”"
+    }
+  },
+  {
+    c: "郭", t: "郭", py: "Guō", rank: "No. 14 (339,929人)",
+    keys: ["郭","kuek","kweh","quek","kek","kwek","kwok","kok","guo"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Kuek / Kweh / Quek / Kek" },
+      { name: "潮州 Teochew", val: "Kwek" },
+      { name: "广府/粤语 Cantonese", val: "Kwok" },
+      { name: "客家 Hakka", val: "Kok" }
+    ],
+    story: {
+      zh: "在古代，人们把内城的城墙叫做“城”，而把城墙外面加盖的一圈外城墙叫做“郭”。在周朝时期，有些家族世代住在外城墙附近，负责守卫城池或者建造外城墙，大家就把他们称为“住在郭边的人”。久而久之，这群守卫与建筑匠人的后代就以“郭”为姓氏。郭姓，最初就是“住在外城墙边的守城人”。",
+      ms: "Pada zaman purba, tembok bandar di bahagian dalam dipanggil “Cheng“, manakala tembok pertahanan luar di sekelilingnya dipanggil “Guo“. Semasa Zaman Dinasti Zhou, adanya keluarga yang tinggal berhampiran tembok luar untuk mengawal atau membina tembok tersebut. Lama-kelamaan, keturunan pengawal dan pembina ini menggunakan “Guo“ sebagai nama keluarga. Pada asalnya, nama keluarga Guo bermaksud “pengawal yang tinggal di tepi tembok luar bandar.“",
+      en: "In ancient times, the inner city wall was called “Cheng,“ while the outer protective wall built around it was called “Guo.“ During the Zhou Dynasty, families who lived near the outer wall to defend or build it were referred to as “the people living by the outer wall.“ Over time, the descendants of these guards and builders adopted “Guo“ as their surname. Originally, the surname Guo meant “defenders living by the outer city wall.“"
+    }
+  },
+  {
+    c: "洪", t: "洪", py: "Hóng", rank: "No. 15 (339,377人)",
+    keys: ["洪","ang","hong","hung","fung"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Ang" },
+      { name: "潮州 Teochew", val: "Ang" },
+      { name: "广府/粤语 Cantonese", val: "Hong / Hung" },
+      { name: "客家 Hakka", val: "Fung" },
+      { name: "福州 Foochow", val: "Hung" }
+    ],
+    story: {
+      zh: "洪姓来源自上古神话里的水神“共工”，其家族世代掌管水利。到了周朝，共工氏的后裔住在“共地”，原本以“共”为姓。后代子孙为了纪念祖上是掌管水德的水神，便在“共”字左边加了三点水（氵），组合成了“洪”字。洪姓，最初就是水神共工后代。",
+      ms: "Nama keluarga Hong berasal daripada Gonggong, Dewa Air dalam mitologi China purba, yang keluarganya menguruskan sumber air selama turun-temurun. Semasa Zaman Dinasti Zhou, keturunannya tinggal di sebuah tempat bernama “Gong“ dan pada asalnya menggunakan “Gong“ sebagai nama keluarga. Kemudian, untuk memperingati nenek moyang mereka sebagai Dewa Air, mereka menambah radikal “air“ (氵) pada perkataan “Gong“ (共), lalu membentuk nama keluarga “Hong“ (洪). Pada asalnya, nama keluarga Hong bermaksud keturunan Gonggong, sang Dewa Air.",
+      en: "The surname Hong originates from Gonggong, the Water God of ancient Chinese mythology, whose family managed water resources for generations. During the Zhou Dynasty, his descendants lived in a place named “Gong“ and initially took “Gong“ as their surname. Later, to honor their ancestral connection to the Water God, they added the “water“ radical (氵) to the character “Gong“ (共), creating the surname “Hong“ (洪). Originally, the surname Hong meant descendants of Gonggong, the Water God."
+    }
+  },
+  {
+    c: "钟", t: "鍾", py: "Zhōng",
+    keys: ["钟","鍾","cheng","chong","choong","chio","chung","zhong"],
+    dial: [
+      { name: "客家 Hakka", val: "Cheng / Chong" },
+      { name: "福建闽南 Hokkien", val: "Choong / Chio" },
+      { name: "潮州 Teochew", val: "Choong" },
+      { name: "广府/粤语 Cantonese", val: "Chung" }
+    ],
+    story: {
+      zh: "春秋时期，宋国贵族的后代逃至楚国，其孙钟建因担任掌管皇家宫廷钟乐的官职“钟官”，其子孙便以官职和乐器“钟”为姓世代相传。钟姓，最初就是春秋皇家掌管宫廷钟乐的官吏。",
+      ms: "Lebih 2,500 tahun lalu, seorang bangsawan bernama Zhong Jian berkhidmat sebagai pegawai yang menguruskan muzik loceng di istana diraja. Keturunannya kemudian mengambil jawatan dan alat muzik “Zhong“ (Loceng) sebagai nama keluarga. Pada asalnya, nama keluarga Zhong bermaksud “pegawai istana yang menguruskan muzik loceng diraja China purba.“",
+      en: "Over 2,500 years ago, a nobleman named Zhong Jian served as the official overseeing royal court bell music. His descendants adopted his title and the instrument “Zhong“ (Bell) as their surname. Originally, the surname Zhong meant court officials who managed royal bell music in ancient China."
+    }
+  },
+  {
+    c: "邱", t: "邱", py: "Qiū",
+    keys: ["邱","丘","khoo","ku","yeow","hue","hiew","hew","kiew","kiu","qiu"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Khoo / Ku" },
+      { name: "广府/粤语 Cantonese", val: "Yeow / Yau" },
+      { name: "客家 Hakka", val: "Hue / Hiew / Hew" },
+      { name: "福州 Foochow", val: "Kiew / Kiu" }
+    ],
+    story: {
+      zh: "邱姓源自“丘”姓，出自齐国始祖姜子牙，其后代因居住在营丘便以地名为姓；到了清朝雍正年间，朝廷为了表示对至圣先师孔子（名“丘”）的尊崇与避讳，下令在“丘”字旁加上“阝”，绝大多数丘氏族人集体改姓为“邱”。邱姓，最初是姜子牙的封地后裔，也是因尊崇孔子而避讳改字的特殊姓氏。",
+      ms: "Nama keluarga Qiu berasal daripada nama keluarga asal Qiu (丘), yang berakar daripada Jiang Ziya. Semasa Dinasti Qing, sebagai tanda penghormatan tertinggi kepada Confucius (yang nama peribadinya ialah “Qiu“), istana diraja memerintahkan penambahan radikal “阝“ pada perkataan “丘“, menyebabkan sebahagian besar ahli keluarga mengubah nama keluarga mereka kepada “Qiu“. Pada asalnya, nama keluarga Qiu ialah keturunan dari tanah kurniaan Jiang Ziya, serta nama keluarga unik yang diubah demi menghormati Confucius.",
+      en: "The surname Qiu originates from the earlier surname Qiu (丘), tracing back to Jiang Ziya. During the Qing Dynasty, out of supreme respect for Confucius (whose given name was “Qiu“), the imperial court decreed adding the “阝“ radical to “丘“, leading most members of the clan to change their surname to “邱“. Originally, the surname Qiu represents descendants from Jiang Ziya's fief, as well as a unique surname formed out of deference to Confucius."
+    }
+  },
+  {
+    c: "钱", t: "錢", py: "Qián",
+    keys: ["钱","錢","chee","chieng","chien","chin","qian"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Chee" },
+      { name: "潮州 Teochew", val: "Chee" },
+      { name: "福州 Foochow", val: "Chieng" },
+      { name: "客家 Hakka", val: "Chien / Chin" },
+      { name: "广府/粤语 Cantonese", val: "Chin" }
+    ],
+    story: {
+      zh: "周朝时，籛（jiān）孚在周王室担任专门掌管国家钱财、国库税收与铸币的最高官职——“钱府上士”（相当于现在的国家财政部长）。他掌管钱库有功，子孙后代深以为荣，便去掉了“籛”字的竹字头，直接以官职“钱”为姓世代相传。钱姓，最初就是周朝财政大臣的后代。",
+      ms: "Semasa Zaman Dinasti Zhou, Jian Fu berkhidmat di istana diraja sebagai “Qianfu Shangshi“ (pegawai tertinggi yang menguruskan perbendaharaan negara, cukai, dan pencetakan wang). Atas perkhidmatan cemerlang beliau menguruskan khazanah negara, keturunannya sangat berbangga dengan tugas tersebut lalu mengambil “Qian“ (bermaksud “Wang“) sebagai nama keluarga. Pada asalnya, nama keluarga Qian bermaksud “keturunan Menteri Kewangan Dinasti Zhou.“",
+      en: "During the Zhou Dynasty, Jian Fu served in the royal court as the “Qianfu Shangshi“ (the highest official in charge of the national treasury, taxes, and coinage). Because of his outstanding merit in managing the treasury, his descendants took immense pride in his duty and adopted “Qian“ (meaning “Money“) as their surname. Originally, the surname Qian meant “descendants of the Zhou Dynasty's Finance Minister.“"
+    }
+  },
+  {
+    c: "马", t: "馬", py: "Mǎ",
+    keys: ["马","馬","beh","mah","ma"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Beh" },
+      { name: "潮州 Teochew", val: "Beh" },
+      { name: "广府/粤语 Cantonese", val: "Mah / Ma" },
+      { name: "客家 Hakka", val: "Mah / Ma" },
+      { name: "福州 Foochow", val: "Mah / Ma" }
+    ],
+    story: {
+      zh: "2300年前，大破秦军的赵国名将——赵奢因战功被封为掌管国家军马的“马服君”，后代便以“马”为姓；此外，马姓也是中华回族的代表性姓氏，古代沿着丝绸之路来到中国的阿拉伯与波斯穆斯林，常选取圣人穆罕默德（Muhammad）的首音“马”作为汉姓。马姓，是战国战神的骑兵荣耀，也是丝绸之路上东西方文明交融的见证。",
+      ms: "Kira-kira 2,300 tahun lalu, Zhao She, seorang jeneral terkenal yang menewaskan tentera Qin, telah dikurniakan gelaran “Tuan Mafu“ (pengurus kuda perang kerajaan) atas jasa ketenteraannya, lalu keturunannya mengambil “Ma“ sebagai nama keluarga. Selain itu, nama keluarga Ma juga merupakan nama keluarga utama bagi masyarakat Muslim Hui di China. Pedagang dan pengembara Muslim Arab serta Parsi yang tiba di China melalui Laluan Sutera purba kerap memilih “Ma“—sebutan suku kata pertama Nabi Muhammad—sebagai nama keluarga Cina mereka. Nama keluarga Ma merupakan lambang kemuliaan tentera berkuda pahlawan perang dan bukti pertukaran budaya di Laluan Sutera.",
+      en: "About 2,300 years ago, Zhao She, a famous general who defeated the Qin army, was granted the title “Lord of Mafu“ (in charge of royal warhorses) for his military achievements, and his descendants adopted “Ma“ as their surname. Additionally, “Ma“ became a representative surname of the Chinese Hui Muslims. Ancient Arab and Persian Muslims who traveled along the Silk Road to China often chose “Ma“—the first syllable of the Prophet Muhammad—as their Chinese surname. The surname Ma embodies both the cavalry glory of an ancient war hero and the cultural exchange along the Silk Road."
+    },
+    funFact: {
+      zh: "💡 小知识：中国拥有超过 2500 万名回族穆斯林，而“马”正是他们之中最普遍、最具有代表性的姓氏！",
+      ms: "💡 Fakta Menarik: Terdapat lebih 25 juta umat Islam Hui di China, dan “Ma“ merupakan nama keluarga yang paling popular dalam kalangan mereka!",
+      en: "💡 Fun Fact: There are over 25 million Hui Muslims in China, and “Ma“ is the most common surname among them!"
+    }
+  },
+  {
+    c: "巫", t: "巫", py: "Wū",
+    keys: ["巫","boo","bu","moo","woo","wu"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Boo / Bu" },
+      { name: "客家 Hakka", val: "Moo" },
+      { name: "广府/粤语 Cantonese", val: "Woo / Wu" },
+      { name: "福州 Foochow", val: "Woo / Wu" }
+    ],
+    story: {
+      zh: "巫姓是中国古老姓氏，起源于上古以职官为氏，主要与巫祝、占卜等职业相关。商朝的大臣巫咸、巫贤父子世代担任掌管占卜与国家大政的“巫臣”，后代便以官职“巫”为姓。巫姓，最初就是古代的占卜师和神医后代。",
+      ms: "Nama keluarga Wu ialah nama keluarga purba di China yang berasal daripada jawatan pegawai pada zaman purba, terutamanya berkaitan dengan ahli nujum, perawat, dan pegawai istana. Semasa Dinasti Shang, pembesar istana Wu Xian dan anaknya Wu Xian berkhidmat secara turun-temurun sebagai pegawai yang menguruskan ramalan nujum dan hal ehwal negara. Keturunan mereka kemudiannya mengambil gelaran jawatan “Wu“ sebagai nama keluarga. Pada asalnya, nama keluarga Wu bermaksud “keturunan ahli nujum dan tabib purba.“",
+      en: "The surname Wu is an ancient Chinese surname derived from official roles in antiquity, mainly associated with diviners, healers, and spiritual ministers. During the Shang Dynasty, the high ministers Wu Xian and his son Wu Xian served for generations as court officials in charge of divination and state affairs. Their descendants adopted their official title, “Wu,“ as their surname. Originally, the surname Wu meant descendants of ancient diviners and royal healers."
+    }
+  },
+  /* ===== 扩充百大姓氏库（匹配大马本地拼法） ===== */
+  {
+    c: "卓", t: "卓", py: "Zhuó",
+    keys: ["卓","toh","tok","cheok","chok","zhuo"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Toh / Tok" },
+      { name: "潮州 Teochew", val: "Toh / To" },
+      { name: "客家 Hakka", val: "Chok" },
+      { name: "广府/粤语 Cantonese", val: "Cheok / Chok" },
+      { name: "福州 Foochow", val: "Toh" }
+    ],
+    story: {
+      zh: "卓姓源自楚国封邑，楚威王封其后人于卓邑，后代遂以邑名为姓。在马来西亚，福建闽南籍多拼作 Toh，粤籍与客家籍拼作 Cheok 或 Chok，在柔佛、槟城等地均有宗亲会馆传承。",
+      ms: "Nama keluarga Zhuo (卓) berakar umbi dari Negeri Chu semasa Zaman Chunqiu. Di Malaysia, komuniti Hokkien lazimnya menggunakan ejaan Toh atau Tok, manakala mereka yang berlatarbelakangkan Kantonis atau Hakka dieja Cheok atau Chok.",
+      en: "The Zhuo surname (卓) originates from the ancient State of Chu. In Malaysia, Hokkien descendants are widely registered as Toh or Tok, whereas Cantonese and Hakka descendants typically spell it Cheok or Chok."
+    }
+  },
+  {
+    c: "胡", t: "胡", py: "Hú",
+    keys: ["胡","oh","hoo","foo","hu","woo"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Oh / Hoo" },
+      { name: "潮州 Teochew", val: "Oh" },
+      { name: "客家 Hakka", val: "Foo / Fu" },
+      { name: "广府/粤语 Cantonese", val: "Wu / Woo" },
+      { name: "福州 Foochow", val: "Hu" }
+    ],
+    story: {
+      zh: "胡姓源自陈胡公妫满之后，其谥号为“胡”，后世子孙以谥为氏。在马来西亚，闽潮籍多登记为 Oh，客家籍则极多登记为 Foo。",
+      ms: "Nama keluarga Hu (胡) berasal daripada Chen Hu Gong. Di Malaysia, penutur Hokkien/Teochew sering direkod sebagai Oh, manakala masyarakat Hakka kebanyakannya dieja Foo.",
+      en: "The Hu surname (胡) traces back to Chen Hu Gong. In Malaysia, Hokkien and Teochew speakers often spell it Oh, while Hakka families predominantly spell it Foo."
+    }
+  },
+  {
+    c: "沈", t: "沈", py: "Shěn",
+    keys: ["沈","sim","shum","sum","shen"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Sim" },
+      { name: "潮州 Teochew", val: "Sim" },
+      { name: "客家 Hakka", val: "Sim" },
+      { name: "广府/粤语 Cantonese", val: "Shum / Sum" }
+    ],
+    story: {
+      zh: "周文王封第十子冉季载于沈国，后人遂以国为姓。在马来西亚闽潮社群中，“Sim”是非常普及的代表性拼法。",
+      ms: "Berasal daripada Negeri Shen semasa Dinasti Zhou. Di Malaysia, ejaan Sim sangat meluas dalam kalangan masyarakat Hokkien dan Teochew.",
+      en: "Originated from the State of Shen in the Zhou Dynasty. In Malaysia, 'Sim' is widely adopted by Hokkien and Teochew communities."
+    }
+  },
+  {
+    c: "潘", t: "潘", py: "Pān",
+    keys: ["潘","phua","poo","poon","pan"],
+    dial: [
+      { name: "福建闽南 Hokkien", val: "Phua / Pua" },
+      { name: "潮州 Teochew", val: "Phua" },
+      { name: "广府/粤语 Cantonese", val: "Poon" },
+      { name: "客家 Hakka", val: "Phun / Pan" }
+    ],
+    story: {
+      zh: "潘姓源出姬姓周文王子毕公高之后，后人食邑于潘，因以为氏。在马来西亚福建人多拼为 Phua，广府人拼为 Poon。",
+      ms: "Keturunan bangsawan Dinasti Zhou. Di Malaysia, dieja Phua dalam dialek Hokkien dan Poon dalam dialek Kantonis.",
+      en: "Descended from the royal house of Zhou. In Malaysia, it is commonly spelled Phua by Hokkiens and Poon by Cantonese speakers."
+    }
+  },
+  {
+    c: "叶", t: "葉", py: "Yè",
+    keys: ["叶","葉","yap","ip","yep","yeap"],
+    dial: [
+      { name: "客家 Hakka", val: "Yap" },
+      { name: "福建闽南 Hokkien", val: "Yap / Yeap" },
+      { name: "广府/粤语 Cantonese", val: "Ip / Yip" }
+    ],
+    story: {
+      zh: "源于楚国沈诸梁（叶公）之封邑“叶”。马来西亚著名吉隆坡开埠功臣叶亚来（Yap Ah Loy）即为客家叶姓代表。",
+      ms: "Berasal dari wilayah Ye di Negeri Chu. Tokoh ternama seperti Yap Ah Loy yang membangunkan Kuala Lumpur membawa ejaan Hakka Yap.",
+      en: "Traces back to Lord Ye of Chu. Famously represented in Malaysian history by Yap Ah Loy, the founding pioneer of Kuala Lumpur."
+    }
+  },
+  {
+    c: "彭", t: "彭", py: "Péng",
+    keys: ["彭","pang","phang","peng"],
+    dial: [
+      { name: "客家 Hakka", val: "Pang / Phang" },
+      { name: "广府/粤语 Cantonese", val: "Pang" },
+      { name: "福建闽南 Hokkien", val: "Phee / Pang" }
+    ],
+    story: {
+      zh: "源于上古大彭国始祖彭祖（籛铿）。在大马客家和广府社群中多登记为 Pang 或 Phang。",
+      ms: "Berasal daripada Peng Zu. Di Malaysia, nama ini biasanya dieja sebagai Pang atau Phang.",
+      en: "Descended from the legendary long-lived ancestor Peng Zu. Widely romanized as Pang or Phang in Malaysia."
+    }
+  },
+  {
+    c: "余", t: "余", py: "Yú",
+    keys: ["余","yee","ee","eu","yu"],
+    dial: [
+      { name: "客家 Hakka", val: "Yee" },
+      { name: "广府/粤语 Cantonese", val: "Yee / Yu" },
+      { name: "福建闽南 Hokkien", val: "Ee / I" },
+      { name: "潮州 Teochew", val: "Ee" }
+    ],
+    story: {
+      zh: "源自春秋秦国大夫由余之后，以祖名为氏。在大马常见 Yee、Ee 等拼音。",
+      ms: "Berasal daripada pegawai You Yu dari Negeri Qin. Dieja Yee atau Ee di Malaysia.",
+      en: "Traces to You Yu of the State of Qin. Often romanized as Yee or Ee in Malaysia."
+    }
+  },
+  {
+    c: "廖", t: "廖", py: "Liào",
+    keys: ["廖","leow","liaw","liew","liao"],
+    dial: [
+      { name: "客家 Hakka", val: "Liaw / Liew" },
+      { name: "福建闽南 Hokkien", val: "Leow / Liau" },
+      { name: "广府/粤语 Cantonese", val: "Lau / Liu" }
+    ],
+    story: {
+      zh: "源于古飂国（后作廖国），叔安之后以国为氏。在马来西亚福建人多拼为 Leow，客家及广府人多拼为 Liew。",
+      ms: "Berasal daripada Negara Liao purba. Di Malaysia, dieja Leow (Hokkien) dan Liew (Hakka/Kantonis).",
+      en: "Originated from the ancient State of Liao. In Malaysia, it is commonly spelled Leow among Hokkiens and Liew among Hakkas."
+    }
+  }
+];
+
+// 多语言界面配置
+const UI = {
+  zh: {
+    title: "姓氏寻根",
+    sub: "从一个姓氏，认识南洋华人的迁徙足迹与方言特色。",
+    infoTitle: "💡 为什么马来西亚华人的姓名拼法如此特别？",
+    infoText: `现行的“汉语拼音”是在中华人民共和国成立后才推广的。在此之前，早已定居大马的华人先辈大多不会普通话，主要讲各自的家乡方言（如粤语、福建话、客家话等），当时也缺乏统一学习标准拼音的环境。<br><br>因此，初代华人报户口时，登记官主要是根据他们口头的方言发音，结合官员自身的拼读习惯进行记录。这就形成了我们今天所见到的各种充满方言特色的拼写法！`,
+    ph: "输入汉字或英文拼音，如：陈 / Tan / 卓 / Toh",
+    go: "查询",
+    tagsLabel: "热门推荐姓氏：",
+    dialTitle: "马来西亚常见方言拼写法",
+    storyTitle: "姓氏来源与故事",
+    mandarin: "汉语拼音：",
+    hint: "提示：拼写法受早期殖民地官员记音习惯及各方言群体语音差异影响，同音常有多种书写。",
+    empty: "暂未收录该姓氏，您可以尝试搜索汉字或常见大马拼音（如 Tan、Lim、Toh）。",
+    footer: "资料为文化教育用途；人口数据参考马来西亚官方人口普查与各方言社群传统拼读。"
+  },
+  ms: {
+    title: "Jejak Nama Keluarga",
+    sub: "Kenali sejarah penghijrahan masyarakat Cina Nanyang melalui satu nama keluarga.",
+    infoTitle: "💡 Mengapa ejaan nama orang Cina di Malaysia begitu unik?",
+    infoText: `Sebelum ejaan Pinyin moden digunakan secara meluas, masyarakat Cina awal di Malaysia kebanyakannya bertutur dalam dialek daerah masing-masing (seperti Hokkien, Kantonis, dan Hakka). Semasa pendaftaran nama, pegawai pendaftaran mencatat ejaan berdasarkan sebutan dialek yang didengari mereka. Oleh itu, huruf Cina yang sama menghasilkan pelbagai ejaan yang unik mengikut dialek yang berbeza!`,
+    ph: "Masukkan aksara Cina atau ejaan Rumi, cth: 陈 / Tan / 卓 / Toh",
+    go: "Cari",
+    tagsLabel: "Pilihan Popular:",
+    dialTitle: "Ejaan Dialek Lazim di Malaysia",
+    storyTitle: "Asal-Usul & Kisah Nama Keluarga",
+    mandarin: "Sebutan Pinyin: ",
+    hint: "Nota: Variasi ejaan dipengaruhi oleh dialek keluarga dan rekod pentadbiran pegawai zaman awal.",
+    empty: "Nama keluarga belum direkodkan. Sila cuba aksara lain atau ejaan Rumi (cth: Tan, Lim, Toh).",
+    footer: "Untuk tujuan pendidikan budaya; rujukan dialek merujuk kepada kelaziman masyarakat Cina Malaysia."
+  },
+  en: {
+    title: "Surname Roots",
+    sub: "Trace the migration stories of Malaysian Chinese through their unique surnames.",
+    infoTitle: "💡 Why are Chinese Malaysian name spellings so unique?",
+    infoText: `Before modern Hanyu Pinyin became widely used, early Chinese immigrants in Malaysia mainly spoke their regional dialects (such as Hokkien, Cantonese, and Hakka). When registering names, officers simply spelled them based on how the spoken dialects sounded to them. As a result, the same Chinese character created various unique spellings based on different dialect pronunciations!`,
+    ph: "Enter a character or Romanisation, e.g. 陈 / Tan / 卓 / Toh",
+    go: "Search",
+    tagsLabel: "Featured Surnames:",
+    dialTitle: "Malaysian Dialectal Romanizations",
+    storyTitle: "Origin & Historical Story",
+    mandarin: "Mandarin Pinyin: ",
+    hint: "Note: Spellings vary due to oral dialect pronunciations and early colonial registration practices.",
+    empty: "Surname not found. Please try a Chinese character or a common Malaysian spelling (e.g. Tan, Lim, Toh).",
+    footer: "For cultural education; dialect spellings reflect authentic Malaysian community traditions."
+  }
+};
+
+let lang = "zh";
+let currentItem = DB[0];
+let infoOpen = true;
+
+// 切换折叠
+function toggleInfo() {
+  infoOpen = !infoOpen;
+  document.getElementById("info-body").style.display = infoOpen ? "block" : "none";
+  document.getElementById("info-icon").textContent = infoOpen ? "▾" : "▸";
+}
+
+// 渲染推荐标签
+function renderTags() {
+  const container = document.getElementById("tags");
+  container.innerHTML = DB.slice(0, 16).map(item => `
+    <button class="tag" onclick="selectTag('${item.c}')">
+      ${item.c} (${item.dial[0].val.split(" / ")[0]})
+    </button>
+  `).join("");
+}
+
+function selectTag(char) {
+  document.getElementById("q").value = char;
+  search(char);
+}
+
+// 搜索匹配
+function search(query) {
+  const clean = query.trim().toLowerCase();
+  if (!clean) return;
+
+  const found = DB.find(d => d.c === query.trim() || d.t === query.trim() || d.keys.some(k => k.toLowerCase() === clean))
+             || DB.find(d => d.keys.some(k => k.toLowerCase().includes(clean)));
+
+  const resultBox = document.getElementById("result");
+
+  if (!found) {
+    resultBox.innerHTML = `<div class="card empty">${UI[lang].empty}</div>`;
+    return;
+  }
+
+  currentItem = found;
+
+  let rankHtml = found.rank ? `<span class="rank-badge">🏆 马来西亚华人人口：${found.rank}</span>` : "";
+
+  let funFactHtml = "";
+  if (found.funFact && found.funFact[lang]) {
+    funFactHtml = `<div class="fun-fact">${found.funFact[lang]}</div>`;
+  }
+
+  resultBox.innerHTML = `
+    <div class="card">
+      <div class="surname-head">
+        <div class="han-box">${found.c}</div>
+        <div class="name-meta">
+          <h2>${found.c} (${found.t})</h2>
+          <div class="pinyin">${UI[lang].mandarin}${found.py}</div>
+          ${rankHtml}
+        </div>
+      </div>
+
+      <div class="section-title">${UI[lang].dialTitle}</div>
+      <div class="dialects">
+        ${found.dial.map(item => `
+          <div class="dialect">
+            <b>${item.name}</b>
+            <span>${item.val}</span>
+          </div>
+        `).join("")}
+      </div>
+
+      <div class="section-title">${UI[lang].storyTitle}</div>
+      <div class="story">${found.story[lang] || found.story.zh}</div>
+      ${funFactHtml}
+
+      <div class="note">${UI[lang].hint}</div>
+    </div>
+  `;
+}
+
+// 切换语言
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll(".langs button").forEach(b => {
+    b.classList.toggle("active", b.dataset.lang === l);
+  });
+
+  document.getElementById("ui-title").textContent = UI[l].title;
+  document.getElementById("ui-sub").textContent = UI[l].sub;
+  document.getElementById("ui-info-title").textContent = UI[l].infoTitle;
+  document.getElementById("ui-info-text").innerHTML = UI[l].infoText;
+  document.getElementById("q").placeholder = UI[l].ph;
+  document.getElementById("go").textContent = UI[l].go;
+  document.getElementById("ui-tags-label").textContent = UI[l].tagsLabel;
+  document.getElementById("ui-footer").textContent = UI[l].footer;
+
+  if (currentItem) {
+    search(currentItem.c);
+  }
+}
+
+// 事件绑定
+document.querySelectorAll(".langs button").forEach(b => {
+  b.onclick = () => setLang(b.dataset.lang);
+});
+
+document.getElementById("go").onclick = () => search(document.getElementById("q").value);
+document.getElementById("q").onkeydown = (e) => {
+  if (e.key === "Enter") search(document.getElementById("q").value);
+};
+
+// 初始化
+renderTags();
+search("陈");
+</script>
+</body>
+</html>
